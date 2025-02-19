@@ -1,5 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 from application.weather_service import WeatherService
+from container import ApplicationContainer
+from dependency_injector.wiring import Provide, inject
 from domain.weather.entities import Weather
 from domain.weather.exceptions import LocationNotFoundError
 from infrastructure.logging_adapter import get_logger
@@ -10,11 +12,9 @@ logger = get_logger()
 
 router = APIRouter(prefix="/weather")
 
-def get_weather_service() -> WeatherService:
-    return WeatherService(AccuWeatherAdapter())
-
 @router.get("/{location_id}")
-def get_user(location_id: str, weather_service: Annotated[WeatherService, Depends(get_weather_service)]):
+@inject
+async def get_user(location_id: str, weather_service: WeatherService = Depends(Provide[ApplicationContainer.weather_service])):
     logger.info(f"Trying to get weather information for LocationID")
 
     try:
