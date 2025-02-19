@@ -16,7 +16,7 @@ This project demonstrates the principles of Hexagonal Architecture (Ports and Ad
 To install the core services, clone the repository and install the dependencies:
 
 ```bash
-git clone https://github.com/HieuTranV/python-hexagonal-ddd.git
+git clone https://github.com/kadmohardy/port_adapter
 pip install -r requirements.txt
 ```
 
@@ -43,7 +43,7 @@ To test the services:
 To start the services, use the following command:
 
 ```bash
-uvicorn src.main:app --host 0.0.0.0 --port 8080
+python src/main.py 
 ```
 
 This command will start the application using Uvicorn, an ASGI server for Python web applications. The `--host 0.0.0.0` option makes the server accessible externally, and `--port 8080` specifies the port on which the server will listen.
