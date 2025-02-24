@@ -5,15 +5,12 @@ class Configurations(BaseModel):
     # accu_weather_url: str = os.getenv("ACCU_WEATHER_URL")
     # accu_weather_api_key: str = os.getenv("ACCU_WEATHER_API_KEY")
     accu_weather_url: str = "http://dataservice.accuweather.com/currentconditions/v1"
-    accu_weather_api_key: str = "sRfnrvmAbE30ySXdruJAey5zKfNGq5Ge"
+    accu_weather_api_key: str = "727ZVcS3pDX63coQz8KHE76vi1OSNmPR"
 app_config = Configurations()
-
-# ACCU_WEATHER_URL=http://dataservice.accuweather.com/currentconditions/v1
-# ACCU_WEATHER_API_KEY=sRfnrvmAbE30ySXdruJAey5zKfNGq5Ge
 
 def get_postgres_uri():
     host = os.environ.get("DB_HOST", "localhost")
-    port = 54321 if host == "localhost" else 5432
+    port = 5432 if host == "localhost" else 5432
     password = os.environ.get("DB_PASSWORD", "postgres")
     user, db_name = "postgres", "port_adapter_db"
     return f"postgresql://{user}:{password}@{host}:{port}/{db_name}"

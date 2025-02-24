@@ -6,11 +6,12 @@ from domain.weather.entities import Weather
 from domain.weather.exceptions import LocationNotFoundError
 from infrastructure.logging_adapter import get_logger
 from typing import Annotated
+from infrastructure.weather.repositories import weather_orm
 
+weather_orm.start_mappers()
 logger = get_logger()
 
 router = APIRouter(prefix="/weather")
-
 @router.get("/{location_id}")
 @inject
 async def get_user(location_id: str, weather_service: WeatherService = Depends(Provide[ApplicationContainer.weather_service])):

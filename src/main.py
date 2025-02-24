@@ -5,7 +5,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from routers import weather
 from infrastructure.middleware.trace_id import TraceIDMiddleware
 from container import ApplicationContainer
-from infrastructure.weather.repositories.weather_orm import start_mappers
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -33,7 +32,7 @@ def create_app() -> FastAPI:
 
     app.add_middleware(TraceIDMiddleware)
     app.include_router(weather.router)
-
+    
     return app
 
 app = create_app()

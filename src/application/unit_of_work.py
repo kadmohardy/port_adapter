@@ -18,11 +18,8 @@ class AbstractUnitOfWork(abc.ABC):
     def __exit__(self, *args):
         self.rollback()
 
-    def commit(self):
-        self._commit()
-
     @abc.abstractmethod
-    def _commit(self):
+    def commit(self):
         raise NotImplementedError
 
     @abc.abstractmethod
@@ -32,7 +29,7 @@ class AbstractUnitOfWork(abc.ABC):
 
 def get_postgres_uri():
     host = os.environ.get("DB_HOST", "localhost")
-    port = 54321 if host == "localhost" else 5432
+    port = 5432 if host == "localhost" else 5432
     password = os.environ.get("DB_PASSWORD", "postgres")
     user, db_name = "postgres", "port_adapter_db"
     return f"postgresql://{user}:{password}@{host}:{port}/{db_name}"
@@ -42,7 +39,8 @@ DEFAULT_SESSION_FACTORY = sessionmaker(
     bind=create_engine(
         get_postgres_uri(),
         isolation_level="REPEATABLE READ",
-    )
+    ), 
+    expire_on_commit=False
 )
 
 class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
@@ -51,14 +49,14 @@ class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
 
     def __enter__(self):
         self.session = self.session_factory()  # type: Session
-        self.products = repository.SqlAlchemyRepository(self.session)
+        self.weather = weather_repository.SQLAlchemyWeatherRepository(self.session)
         return super().__enter__()
 
     def __exit__(self, *args):
         super().__exit__(*args)
         self.session.close()
 
-    def _commit(self):
+    def commit(self):
         self.session.commit()
 
     def rollback(self):

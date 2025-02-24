@@ -9,11 +9,11 @@ from requests.auth import HTTPBasicAuth
 from configs import config
 
 class AccuWeatherAdapter(WeatherPort):
-    def _get_url(self, location_id: str) -> str: 
+    def _get_url(self, location_id: int) -> str: 
         api_key = config.app_config.accu_weather_api_key
         return config.app_config.accu_weather_url + '/' + location_id + '?apikey=' + api_key
 
-    def get_weather_information(self, location_id: str) -> Weather:
+    def get_weather_information(self, location_id: int) -> Weather:
         print("Searching weather information on")
         url = self._get_url(location_id)
         r = requests.get(url).json()
@@ -21,8 +21,9 @@ class AccuWeatherAdapter(WeatherPort):
             case {'Code': '400'}:
                 raise LocationNotFoundError("No weather information for locationID")
             case _:
+                print(r)
                 response = r[0]
-                translated_response = Weather(id=location_id, temperature=response['Temperature']['Metric']['Value'], weather_text=response['WeatherText'])
+                translated_response = Weather(location_id=location_id, temperature=response['Temperature']['Metric']['Value'], weather_text=response['WeatherText'])
                 return translated_response
 
         

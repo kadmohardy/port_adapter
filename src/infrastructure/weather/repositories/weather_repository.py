@@ -1,5 +1,3 @@
-# somewhere in the domain layer
-import abc
 from sqlalchemy.orm import Session
 from domain.weather.entities import Weather
 from domain.weather.repositories import WeatherAbstractRepository
@@ -8,22 +6,25 @@ class SQLAlchemyWeatherRepository(WeatherAbstractRepository):
     """SqlAlchemy implementation of WeatherAbstractRepository"""
 
     def __init__(self, db_session: Session):
-        self._session = db_session
+        print("Initializing SQLAlchemyWeatherRepository")
+        self.session = db_session
 
 
     def add(self, weather: Weather) -> Weather | None:
         try:
-            self._session.add(weather)
-            self._session.commit()
+            self.session.add(weather)
+            self._session.flush()
+            self._session.refresh(weather)
             return weather
-        except Exception:
+        except Exception as error:
+            print(error)
             return None
 
 
-    def get_by_id(self, id: int) -> Weather | None:
+    def get(self, id: int) -> Weather | None:
         try:
             response = (
-                self._session.query(Weather)
+                self.session.query(Weather)
                 .filter_by(id=id)
                 .one()
             )
