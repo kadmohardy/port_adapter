@@ -2,10 +2,10 @@ import uvicorn
 from contextlib import asynccontextmanager
 from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from configs import config
 from routers import weather
 from infrastructure.middleware.trace_id import TraceIDMiddleware
 from container import ApplicationContainer
+from infrastructure.weather.repositories.weather_orm import start_mappers
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -22,7 +22,7 @@ def create_app() -> FastAPI:
     container.wire(modules=[weather])
 
     app = FastAPI(lifespan=lifespan)
-    
+
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["*"],

@@ -5,6 +5,7 @@ from domain.weather.exceptions import LocationNotFoundError
 
 from ports.weather_port import WeatherPort
 from requests.auth import HTTPBasicAuth
+
 from configs import config
 
 class AccuWeatherAdapter(WeatherPort):
@@ -21,6 +22,7 @@ class AccuWeatherAdapter(WeatherPort):
                 raise LocationNotFoundError("No weather information for locationID")
             case _:
                 response = r[0]
-                return Weather(id=location_id, temperature=response['Temperature']['Metric']['Value'], wether_text=response['WeatherText'])
+                translated_response = Weather(id=location_id, temperature=response['Temperature']['Metric']['Value'], weather_text=response['WeatherText'])
+                return translated_response
 
-
+        

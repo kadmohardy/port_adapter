@@ -1,6 +1,7 @@
-from pydantic import BaseModel
+from dataclasses import dataclass
+from pydantic import BaseModel, EmailStr
 
 class Weather(BaseModel):
     id: str
     temperature: float
-    wether_text: str
+    weather_text: str
