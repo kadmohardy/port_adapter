@@ -5,7 +5,6 @@ from dependency_injector.wiring import Provide, inject
 from domain.weather.entities import Weather
 from domain.weather.exceptions import LocationNotFoundError
 from infrastructure.logging_adapter import get_logger
-from typing import Annotated
 from infrastructure.weather.repositories import weather_orm
 
 weather_orm.start_mappers()

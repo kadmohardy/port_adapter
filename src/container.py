@@ -11,9 +11,14 @@ class ApplicationContainer(containers.DeclarativeContainer):
     see https://github.com/ets-labs/python-dependency-injector for more details
     """
     print("Starting dependencies injection container")
+    
+    sql_alchemy_uow_factory = providers.Factory(SqlAlchemyUnitOfWork)
+    weather_port_factory = providers.Factory(AccuWeatherAdapter)
+
     weather_service = providers.Factory(
         WeatherService,
-        weather_port=AccuWeatherAdapter()
+        weather_port=weather_port_factory, 
+        uow = sql_alchemy_uow_factory
     )
 
  
