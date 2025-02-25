@@ -4,7 +4,7 @@ import os
 class Configurations(BaseModel):
     # accu_weather_url: str = os.getenv("ACCU_WEATHER_URL")
     # accu_weather_api_key: str = os.getenv("ACCU_WEATHER_API_KEY")
-    accu_weather_url: str = "http://dataservice.accuweather.com/currentconditions/v1"
+    accu_weather_url: str = "https://dataservice.accuweather.com/forecasts/v1"
     accu_weather_api_key: str = "727ZVcS3pDX63coQz8KHE76vi1OSNmPR"
 app_config = Configurations()
 
@@ -25,3 +25,7 @@ def get_email_host_and_port():
     port = 11025 if host == "localhost" else 1025
     http_port = 18025 if host == "localhost" else 8025
     return dict(host=host, port=port, http_port=http_port)
+
+
+
+
