@@ -9,7 +9,9 @@
 
 ## Introduction
 
-This project demonstrates the principles of Hexagonal Architecture (Ports and Adapters) and Domain-Driven Design (DDD) using Python. It showcases how to design clean, maintainable, and scalable applications by focusing on domain logic, decoupling dependencies, and enhancing testability.
+This project demonstrates the principles of Hexagonal Architecture (Ports and Adapters) and Domain-Driven Design (DDD) using Python. It showcases how to design clean, maintainable, and scalable applications by focusing on domain logic, decoupling dependencies, and enhancing testability. 
+
+The project was an api that integrates to ACCUWeather API in order to retrieve the best clothes for a given period.
 
 ## Installation
 
